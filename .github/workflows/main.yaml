@@ -17,7 +17,6 @@ jobs:
         id: install
 
       - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-        if: ${{ steps.version.outputs.PUBLISH == 'yes' }}
         with:
           version: '290.0.1'
           project_id: ${{ secrets.GCP_PROJECT_ID }}
