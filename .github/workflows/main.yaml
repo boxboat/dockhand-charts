@@ -33,7 +33,6 @@ jobs:
           helm repo index dockhand-charts --merge ./dockhand-charts/index.yaml --url https://dockhand-charts.storage.googleapis.com
 
       - name: Publish
-        if: ${{ steps.version.outputs.PUBLISH == 'yes' }}
         run: |
           cd ./dockhand-charts;
           gsutil -m -q cp * gs://dockhand-charts/
