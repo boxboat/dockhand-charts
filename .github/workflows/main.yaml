@@ -26,7 +26,8 @@ jobs:
 
       - name: Package Helm Charts
         run: |
-          helm package *
+          helm package dockhand-secrets-operator
+          helm package dockhand-secrets-operator-crd
           mkdir dockhand-charts
           mv *.tgz dockhand-charts/
           gsutil cp gs://dockhand-charts/index.yaml ./dockhand-charts/
