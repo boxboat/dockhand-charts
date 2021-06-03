@@ -26,6 +26,14 @@ spec:
             - {{ include "dockhand-secrets-operator.name" . }}-webhook
             - --namespace
             - {{ .Release.Namespace }}
+            - --webhook-id
+            - $(POD_NAME)
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.name
           ports:
               - containerPort: 8443
                 name: https
