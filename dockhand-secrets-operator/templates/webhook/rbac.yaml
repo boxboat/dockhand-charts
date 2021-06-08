@@ -25,7 +25,8 @@ rules:
       - leases
     verbs:
       - '*'
-  - apiGroups: [ "" ]
+  - apiGroups:
+      - apps
     resources:
       - deployments
     resourceNames:
