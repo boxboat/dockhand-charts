@@ -20,29 +20,20 @@ rules:
       - update
       - list
   - apiGroups:
-      - certificates.k8s.io
+      - coordination.k8s.io
     resources:
-      - certificatesigningrequests
+      - leases
+    verbs:
+      - '*'
+  - apiGroups: [ "" ]
+    resources:
+      - deployments
+    resourceNames:
+      - {{ include "dockhand-secrets-operator.name" . }}-webhook
     verbs:
       - get
-      - create
-      - delete
-      - list
-      - watch
-  - apiGroups:
-      - certificates.k8s.io
-    resources:
-      - certificatesigningrequests/approval
-    verbs:
+      - patch
       - update
-  - apiGroups:
-      - certificates.k8s.io
-    resources:
-      - signers
-    resourceNames:
-      - kubernetes.io/*
-    verbs:
-      - approve
   - apiGroups: [ "" ]
     resources:
       - secrets
