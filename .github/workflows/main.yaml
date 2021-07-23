@@ -27,6 +27,7 @@ jobs:
         run: |
           helm package dockhand-secrets-operator
           helm package dockhand-secrets-operator-crd
+          helm package dockhand-lru-registry
           mkdir dockhand-charts
           mv *.tgz dockhand-charts/
           gsutil cp gs://dockhand-charts/index.yaml ./dockhand-charts/
