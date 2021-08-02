@@ -7,4 +7,4 @@ metadata:
     {{- include "dockhand-lru-registry.labels" . | nindent 4 }}
 data:
   registry-config.yaml: |
-    {{ (tpl (.Files.Get "files/conf/registry-config.yaml") .) | nindent 4 }}
+    {{ (tpl (.Values.registry.conf) .) | nindent 4}}
