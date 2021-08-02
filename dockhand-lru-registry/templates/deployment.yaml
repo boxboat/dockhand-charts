@@ -15,7 +15,7 @@ spec:
       labels:
         {{- include "dockhand-lru-registry.selectorLabels" . | nindent 8 }}
       annotations:
-        checksum/config-maps: {{ (.Files.Glob "files/**").AsConfig | sha256sum }}
+        checksum/config-maps: {{ (tpl (.Values.registry.conf) .) | sha256sum }}
     spec:
       initContainers:
         - name: init-registry-proxy
