@@ -16,11 +16,12 @@ registry:
 
 proxy:
   debug: false
+  port: 3000
   cleanSettings:
-    targetUsagePercentage: 80.0
+    targetUsageBytes: 80Gi
     cleanTagPercentage: 10.0
     cron: "0 0 * * *"
-    timezone: "GMT"
+    timezone: "Local"
   image:
     repository: boxboat/dockhand-lru-registry
     pullPolicy: IfNotPresent
@@ -28,8 +29,7 @@ proxy:
 
 service:
   type: ClusterIP
-  port: 80
-  portMirror: 8080
+  port: 3000
 
 ingress:
   enabled: false

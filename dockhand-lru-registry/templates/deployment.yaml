@@ -36,8 +36,8 @@ spec:
           args:
             - start
             - --use-forwarded-headers
-            - --target-percentage
-            - {{ .Values.proxy.cleanSettings.targetUsagePercentage | quote}}
+            - --target-byte-usage
+            - {{ .Values.proxy.cleanSettings.targetUsageBytes | quote}}
             - --clean-tags-percentage
             - {{ .Values.proxy.cleanSettings.cleanTagPercentage | quote}}
             - --registry-dir
@@ -49,13 +49,14 @@ spec:
             - --registry-host
             - 127.0.0.1:5000
             - --port
-            - "80"
+            - {{ .Values.proxy.port | quote }}
+            - --separate-disk
             {{- if .Values.proxy.debug }}
             - --debug
             {{- end }}
           ports:
             - name: cache
-              containerPort: 80
+              containerPort: {{ .Values.proxy.port }}
               protocol: TCP
           volumeMounts:
             - name: registry-bin
