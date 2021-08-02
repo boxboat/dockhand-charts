@@ -50,7 +50,9 @@ spec:
             - 127.0.0.1:5000
             - --port
             - {{ .Values.proxy.port | quote }}
+            {{- if .Values.registry.cache.persistence.enabled }}
             - --separate-disk
+            {{- end }}
             {{- if .Values.proxy.debug }}
             - --debug
             {{- end }}
