@@ -110,26 +110,31 @@ spec:
             items:
               - key: registry-config.yaml
                 path: config.yml
-        {{- if not .Values.registry.cache.persistence.enabled }}
+        {{- if eq .Values.registry.cache.persistence.type "emptyDir" }}
         - name: registry-cache
-          {{- if .Values.registry.cache.emptyDir }}
+          {{- if .Values.registry.cache.persistence.emptyDir }}
           emptyDir:
-            {{- toYaml .Values.registry.cache.emptyDir | nindent 12 }}
+            {{- toYaml .Values.registry.cache.persistence.emptyDir | nindent 12 }}
           {{- else }}
           emptyDir: {}
           {{- end }}
         {{- end }}
-  {{- if .Values.registry.cache.persistence.enabled }}
+        {{- if eq .Values.registry.cache.persistence.type "hostPath" }}
+        - name: registry-cache
+          hostPath:
+            {{- toYaml .Values.registry.cache.persistence.hostPath | nindent 12 }}
+        {{- end }}
+  {{- if eq .Values.registry.cache.persistence.type "pvc" }}
   volumeClaimTemplates:
     - metadata:
         name: registry-cache
       spec:
-        {{- if .Values.registry.cache.persistence.storageClass }}
-        storageClassName: {{ .Values.registry.cache.persistence.storageClass }}
+        {{- if .Values.registry.cache.persistence.pvc.storageClass }}
+        storageClassName: {{ .Values.registry.cache.persistence.pvc.storageClass }}
         {{- end }}
         accessModes:
-          - {{ .Values.registry.cache.persistence.accessMode }}
+          - {{ .Values.registry.cache.persistence.pvc.accessMode }}
         resources:
           requests:
-            storage: {{ .Values.registry.cache.persistence.size | quote }}
+            storage: {{ .Values.registry.cache.persistence.pvc.size | quote }}
   {{- end }}
