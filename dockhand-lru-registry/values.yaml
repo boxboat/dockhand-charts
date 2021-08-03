@@ -26,13 +26,18 @@ registry:
         threshold: 3
   cache:
     enabled: true
-    emptyDir: {}
-      #sizeLimit: 20Gi
     persistence:
-      enabled: true
-      #storageClass: "-"
-      accessMode: ReadWriteOnce
-      size: 100Gi
+      # set to hostPath, emptyDir or pvc
+      type: pvc
+      pvc:
+        #storageClass: "-"
+        accessMode: ReadWriteOnce
+        size: 100Gi
+      hostPath: {}
+        # path: /mnt/dir
+        # type: DirectoryOrCreate
+      emptyDir: {}
+        #sizeLimit: 20Gi
 
 proxy:
   debug: false
