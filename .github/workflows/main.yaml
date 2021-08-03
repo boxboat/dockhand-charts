@@ -16,9 +16,8 @@ jobs:
       - uses: azure/setup-helm@v1
         id: install
 
-      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      - uses: google-github-actions/setup-gcloud@master
         with:
-          version: '290.0.1'
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
