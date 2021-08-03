@@ -52,7 +52,7 @@ proxy:
   image:
     repository: boxboat/dockhand-lru-registry
     pullPolicy: IfNotPresent
-    tag: 0.1.0
+    tag: v0.1.0
 
 service:
   type: ClusterIP
