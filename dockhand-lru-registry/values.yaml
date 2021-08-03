@@ -26,9 +26,8 @@ registry:
         threshold: 3
   cache:
     enabled: true
-    emptyDir:
-      sizeLimitSoft: 10Gi
-      sizeLimitHard: 20Gi
+    emptyDir: {}
+      #sizeLimit: 20Gi
     persistence:
       enabled: true
       #storageClass: "-"
@@ -39,7 +38,7 @@ proxy:
   debug: false
   port: 3000
   cleanSettings:
-    targetUsageBytes: 80Gi
+    targetDiskUsage: 80Gi
     cleanTagPercentage: 10.0
     cron: "0 2 * * *"
     timezone: "Local"

@@ -46,8 +46,8 @@ spec:
           args:
             - start
             - --use-forwarded-headers
-            - --target-byte-usage
-            - {{ .Values.proxy.cleanSettings.targetUsageBytes | quote}}
+            - --target-disk-usage
+            - {{ .Values.proxy.cleanSettings.targetDiskUsage | quote}}
             - --clean-tags-percentage
             - {{ .Values.proxy.cleanSettings.cleanTagPercentage | quote}}
             - --registry-dir
@@ -112,8 +112,12 @@ spec:
                 path: config.yml
         {{- if not .Values.registry.cache.persistence.enabled }}
         - name: registry-cache
+          {{- if .Values.registry.cache.emptyDir }}
           emptyDir:
-            sizeLimit: {{ .Values.registry.cache.emptyDir.sizeLimitHard }}
+            {{- toYaml .Values.registry.cache.emptyDir | nindent 12 }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
         {{- end }}
   {{- if .Values.registry.cache.persistence.enabled }}
   volumeClaimTemplates:
