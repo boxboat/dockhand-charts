@@ -17,8 +17,16 @@ spec:
       annotations:
         checksum/config-maps: {{ (tpl (.Values.registry.conf) .) | sha256sum }}
     spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
         - name: init-registry-proxy
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.registry.image.repository }}:{{ .Values.registry.image.tag }}"
           imagePullPolicy: {{ .Values.registry.image.pullPolicy }}
           command:
@@ -31,6 +39,8 @@ spec:
               mountPath: /registry/bin
       containers:
         - name: cache-lru-proxy
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.proxy.image.repository }}:{{ .Values.proxy.image.tag }}"
           imagePullPolicy: {{ .Values.proxy.image.pullPolicy }}
           args:
@@ -50,7 +60,7 @@ spec:
             - 127.0.0.1:5000
             - --port
             - {{ .Values.proxy.port | quote }}
-            {{- if .Values.registry.cache.persistence.enabled }}
+            {{- if .Values.proxy.cleanSettings.useSeparateDiskCalculation }}
             - --separate-disk
             {{- end }}
             {{- if .Values.proxy.debug }}
@@ -69,6 +79,8 @@ spec:
             - name: registry-cache
               mountPath: /var/lib/registry
         - name: registry
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.registry.image.repository }}:{{ .Values.registry.image.tag }}"
           imagePullPolicy: {{ .Values.registry.image.pullPolicy }}
           volumeMounts:
@@ -77,6 +89,18 @@ spec:
               subPath: config.yml
             - name: registry-cache
               mountPath: /var/lib/registry
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
         - name: registry-bin
           emptyDir: {}

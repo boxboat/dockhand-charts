@@ -41,12 +41,14 @@ proxy:
   cleanSettings:
     targetUsageBytes: 80Gi
     cleanTagPercentage: 10.0
-    cron: "0 0 * * *"
+    cron: "0 2 * * *"
     timezone: "Local"
+    # set this to true if the registry isn't sharing a disk
+    useSeparateDiskCalculation: false
   image:
     repository: boxboat/dockhand-lru-registry
     pullPolicy: IfNotPresent
-    tag: latest
+    tag: 0.1.0
 
 service:
   type: ClusterIP
@@ -68,3 +70,20 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
