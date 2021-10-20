@@ -4,7 +4,7 @@ controller:
   image:
     pullPolicy: IfNotPresent
     repository: boxboat/dockhand-secrets-operator
-    tag: v0.4.0
+    tag: v0.4.1
   resources: {}
 
 webhook:
@@ -12,5 +12,5 @@ webhook:
   image:
     pullPolicy: IfNotPresent
     repository: boxboat/dockhand-secrets-operator
-    tag: v0.4.0
+    tag: v0.4.1
   resources: {}
