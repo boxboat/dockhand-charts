@@ -1,10 +1,14 @@
 
+# set allowCrossNamespace to true for single tenant cross namespace Profile reference
+# see https://secrets-operator.dockhand.dev/usage/core-concepts/
+allowCrossNamespace: false
+
 controller:
   replicas: 1
   image:
     pullPolicy: IfNotPresent
     repository: boxboat/dockhand-secrets-operator
-    tag: v0.4.1
+    tag: v0.5.0
   resources: {}
 
 webhook:
@@ -12,5 +16,5 @@ webhook:
   image:
     pullPolicy: IfNotPresent
     repository: boxboat/dockhand-secrets-operator
-    tag: v0.4.1
+    tag: v0.5.0
   resources: {}
