@@ -28,6 +28,20 @@ rules:
       - update
       - list
       - watch
+  - apiGroups: [ "dhs.dockhand.dev" ]
+    resources:
+      - secrets
+      - secrets/status
+      - profiles
+      - profiles/status
+    verbs:
+      - get
+      - delete
+      - create
+      - patch
+      - update
+      - list
+      - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
