@@ -66,6 +66,7 @@ spec:
                 cacheTTL:
                   type: string
                   default: 60s
+                  format: duration
                   description: |-
                     Duration to cache secret responses
                 tenant:
