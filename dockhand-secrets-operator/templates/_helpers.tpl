@@ -38,5 +38,7 @@ Common labels
 app.kubernetes.io/instance: {{ .Release.Name }}
 helm.sh/chart: {{ include "dockhand-secrets-operator.chart" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- if .Values.additionalLabels }}
+{{ toYaml .Values.additionalLabels }}
 {{- end -}}
-
+{{- end -}}

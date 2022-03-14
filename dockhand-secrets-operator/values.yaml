@@ -4,6 +4,10 @@
 allowCrossNamespace: false
 
 controller:
+  rbac:
+    serviceAccount:
+      # controller.rbac.serviceAccount.annotations -- Additional Service Account annotations.
+      annotations: {}
   replicas: 1
   image:
     pullPolicy: IfNotPresent
@@ -12,6 +16,10 @@ controller:
   resources: {}
 
 webhook:
+  rbac:
+    serviceAccount:
+      # webhook.rbac.serviceAccount.annotations -- Additional Service Account annotations.
+      annotations: {}
   replicas: 1
   image:
     pullPolicy: IfNotPresent

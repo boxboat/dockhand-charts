@@ -12,6 +12,8 @@ spec:
     plural: profiles
     singular: profile
     kind: Profile
+    shortNames:
+      - dhp
   versions:
     - name: v1alpha2
       served: true
