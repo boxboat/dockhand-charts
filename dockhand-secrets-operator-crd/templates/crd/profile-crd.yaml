@@ -12,6 +12,8 @@ spec:
     plural: profiles
     singular: profile
     kind: Profile
+    shortNames:
+      - dhp
   versions:
     - name: v1alpha2
       served: true
@@ -23,7 +25,9 @@ spec:
             awsSecretsManager:
               type: object
               description: |-
-                AWS Secrets Manager configuration to allow the Dockhand Secrets Operator to retrieve Secrets from AWS
+                AWS Secrets Manager configuration to allow the Dockhand Secrets Operator
+                to retrieve Secrets from AWS. If no accessKeyId and secretAccessKey are provided
+                then chain credentials will be used.
               allOf:
                 - required:
                     - region

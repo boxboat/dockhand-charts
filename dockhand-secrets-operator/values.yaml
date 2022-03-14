@@ -4,17 +4,25 @@
 allowCrossNamespace: false
 
 controller:
+  rbac:
+    serviceAccount:
+      # controller.rbac.serviceAccount.annotations -- Additional Service Account annotations.
+      annotations: {}
   replicas: 1
   image:
     pullPolicy: IfNotPresent
     repository: boxboat/dockhand-secrets-operator
-    tag: v1.1.0
+    tag: v1.1.1
   resources: {}
 
 webhook:
+  rbac:
+    serviceAccount:
+      # webhook.rbac.serviceAccount.annotations -- Additional Service Account annotations.
+      annotations: {}
   replicas: 1
   image:
     pullPolicy: IfNotPresent
     repository: boxboat/dockhand-secrets-operator
-    tag: v1.1.0
+    tag: v1.1.1
   resources: {}
