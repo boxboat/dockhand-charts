@@ -6,33 +6,28 @@ on:
       - master
 
 jobs:
-  build:
+  helm:
     runs-on: ubuntu-latest
+
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - uses: azure/setup-helm@v1
-        id: install
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - uses: google-github-actions/setup-gcloud@v0
+      - name: Set up Helm
+        uses: azure/setup-helm@5119fcb9089d432beecbf79bb2c7915207344b78
         with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          export_default_credentials: true
+          version: v3.14.3
 
-      - name: Package Helm Charts
-        run: |
-          helm package dockhand-secrets-operator
-          helm package dockhand-secrets-operator-crd
-          helm package dockhand-lru-registry
-          mkdir dockhand-charts
-          mv *.tgz dockhand-charts/
-          gsutil cp gs://dockhand-charts/index.yaml ./dockhand-charts/
-          helm repo index dockhand-charts --merge ./dockhand-charts/index.yaml --url https://dockhand-charts.storage.googleapis.com
-
-      - name: Publish
-        run: |
-          cd ./dockhand-charts;
-          gsutil -m -q cp * gs://dockhand-charts/
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@a917fd15b20e8b64b94d9158ad54cd6345335584
+        with:
+          charts_dir: /
+          config: cr.yaml
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
