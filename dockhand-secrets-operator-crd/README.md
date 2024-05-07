@@ -5,7 +5,7 @@ Read the [docs](https://secrets-operator.dockhand.dev)
 
 ## Install Instructions
 ```
-helm repo add dockhand https://dockhand-charts.storage.googleapis.com
+helm repo add dockhand https://boxboat.github.io/dockhand-charts
 helm repo update
 helm install --namespace dockhand-secrets-operator dockhand/dockhand-secrets-operator-crd
 ```
